@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_dashboard.css') }}" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="main-content">
+            <h1>Upload Certificate</h1>
+            <form action="/register_certificate" method="POST" enctype="multipart/form-data" class="upload-form">
+                <div class="form-columns">
+                    <div class="column">
+                        <label for="file">Choose File CAP id certificate.pdf</label>
+                        <input type="file" name="certificate" id="file" class="file-input" required /><br>
+
+                        <label for="student_name">Student Name:</label>
+                        <input type="text" name="student_name" required class="file-input"><br>
+
+                        <label for="course_name">Course Name:</label>
+                        <input type="text" name="course_name" required class="file-input"><br>
+                    </div>
+                    <div class="column">
+                        <label for="issueDate">Issue Date:</label>
+                        <input type="date" name="issue_date" id="issueDate" value="{{ default_issue_date }}"><br>
+
+
+                        <label for="department">Department:</label>
+                        <input type="text" name="department" required class="file-input"><br>
+
+                        <label for="certificate_hash">Certificate Hash:</label>
+                        <input type="text" name="certificate_hash" id="certificate_hash" readonly class="file-input"><br>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button type="submit" class="upload-btn">Register Certificate</button>
+                </div>
+            </form>
+
+            {% if ipfs_hash %}
+            <div class="result">
+                <p><strong>Uploaded to IPFS successfully!</strong></p>
+                <p>IPFS Hash: <a href="https://gateway.pinata.cloud/ipfs/{{ ipfs_hash }}" target="_blank">{{ ipfs_hash }}</a></p>
+                <p>SHA-256: {{ sha256_hash }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('file').addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const binary = event.target.result;
+                    const hash = sha256(binary);
+                    document.getElementById('certificate_hash').value = hash;
+                };
+                reader.readAsArrayBuffer(file);
+            }
+        });
+    </script>
+
+    <a href="{{ url_for('logout') }}" class="floating-logout-btn" title="Logout">
+        <img src="{{ url_for('static', filename='logout (1).png') }}" alt="Logout" class="logout-icon-img">
+    </a>
+</body>
+</html>

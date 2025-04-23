@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Verification System</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            color: #03a9f4;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .upload-container {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            width: 300px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #bdbdbd;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px 15px;
+            background-color: #03a9f4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0398e9;
+        }
+
+        #loading {
+            display: none;
+            margin-top: 15px;
+            color: #bdbdbd;
+        }
+
+        #verificationResult {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .admin-login-icon {
+            margin-top: 20px;
+        }
+
+        .admin-login-icon img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #bdc3c7;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Certificate Verification System</h1>
+
+    <div class="upload-container">
+        <form id="verifyForm" enctype="multipart/form-data">
+            <label for="certificateInput">Upload Certificate:</label>
+            <input type="file" id="certificateInput" name="certificate" accept=".pdf,.jpg,.png">
+            <button type="button" id="verifyButton">Verify</button>
+        </form>
+        <div id="loading">Loading...</div>
+        <p id="verificationResult"></p>
+    </div>
+
+    <a href="/admin_login" class="admin-login-icon">
+        <img src="/static/admin.jpg" alt="Admin Login">
+    </a>
+
+    <footer>
+        &copy; 2025 Blockchain Certificate System | Secure • Transparent • Reliable
+    </footer>
+
+    <script>
+        document.getElementById("verifyButton").addEventListener("click", function() {
+            const fileInput = document.getElementById("certificateInput");
+            const resultDiv = document.getElementById("verificationResult");
+            const loadingDiv = document.getElementById("loading");
+
+            if (fileInput.files.length === 0) {
+                alert("Please select a file.");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append("certificate", file);
+
+            loadingDiv.style.display = "block";
+            resultDiv.innerText = ""; // Clear previous result
+
+            fetch("/verify_certificate", {
+                method: "POST",
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                loadingDiv.style.display = "none";
+                resultDiv.innerText = data.message;
+
+                if (data.message === 'Certificate Verified') {
+                    resultDiv.style.color = 'green';
+                } else if (data.message === 'Certificate Not Verified') {
+                    resultDiv.style.color = 'red';
+                } else if (data.message === 'Certificate Not Found on Blockchain') {
+                    resultDiv.style.color = 'orange';
+                } else {
+                    resultDiv.style.color = 'red';
+                }
+            })
+            .catch(error => {
+                loadingDiv.style.display = "none";
+                resultDiv.innerText = "An error occurred.";
+                resultDiv.style.color = "red";
+                console.error("Error:", error);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+/* static/admin_style.css */
+body.admin-login-body, body.admin-dashboard-body {
+    background: #1e3c57;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    padding-top: 60px;
+    text-align: center;
+}
+
+.login-box, .dashboard-container {
+    background-color: #2f4b66;
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    margin: auto;
+    box-shadow: 0 0 12px rgba(0,0,0,0.5);
+}
+
+input[type="text"], input[type="password"], input[type="file"] {
+    width: 85%;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: none;
+    font-size: 16px;
+}
+
+button {
+    background: #00aaff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #0088cc;
+}
+
+.logout-btn {
+    display: inline-block;
+    margin-top: 25px;
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 14px;
+}

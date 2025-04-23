@@ -1,0 +1,130 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #0e1621;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.main-content {
+    background-color: #1a1f2b;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    width: 80%; 
+    max-width: 800px; 
+}
+
+h1 {
+    color: #4da6ff;
+    margin-bottom: 20px;
+}
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-columns {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.form-columns .column {
+    display: flex;
+    flex-direction: column;
+    width: 48%; 
+    box-sizing: border-box;
+}
+
+
+.upload-form label {
+    margin-bottom: 3px;
+    color: #b0b3b8;
+    font-size: 14px;
+    text-align: left;
+}
+
+.file-input,
+input[type="date"],
+input[type="text"],
+input[type="number"],
+textarea {
+    padding: 10px;
+    border: 1px solid #4da6ff;
+    border-radius: 5px;
+    background-color: #0e1621;
+    color: #fff;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.upload-btn {
+    padding: 10px;
+    background-color: #4da6ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.upload-btn:hover {
+    background-color: #3385cc;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
+}
+
+label {
+    color: #b0b3b8;
+    text-align: left;
+    margin-top: 5px;
+}
+
+.result p {
+    color: #90ee90;
+    margin-top: 10px;
+}
+
+.floating-logout-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #0097a7;
+    border-radius: 50%;
+    padding: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    z-index: 999;
+    transition: transform 0.2s;
+    text-align: center;
+}
+
+.floating-logout-btn:hover {
+    transform: scale(1.1);
+}
+
+.logout-icon-img {
+    width: 36px;
+    height: 36px;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1); /* Makes the calendar icon white for dark backgrounds */
+}
